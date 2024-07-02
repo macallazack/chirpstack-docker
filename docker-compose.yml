@@ -18,12 +18,20 @@ services:
       - POSTGRESQL_HOST=postgres
     ports:
       - 8080:8080
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.80
+    restart: unless-stopped
 
   chirpstack-gateway-bridge:
     image: chirpstack/chirpstack-gateway-bridge:4
     restart: unless-stopped
     ports:
       - 1700:1700/udp
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.81
+    restart: unless-stopped
     volumes:
       - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
     environment:
@@ -43,6 +51,10 @@ services:
       - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
     depends_on:
       - mosquitto
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.82
+    restart: unless-stopped
 
   chirpstack-rest-api:
     image: chirpstack/chirpstack-rest-api:4
@@ -52,6 +64,10 @@ services:
       - 8090:8090
     depends_on:
       - chirpstack
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.83
+    restart: unless-stopped
 
   postgres:
     image: postgres:14-alpine
@@ -61,6 +77,10 @@ services:
       - postgresqldata:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=root
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.84
+    restart: unless-stopped
 
   redis:
     image: redis:7-alpine
@@ -68,6 +88,10 @@ services:
     command: redis-server --save 300 1 --save 60 100 --appendonly no
     volumes:
       - redisdata:/data
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.85
+    restart: unless-stopped
 
   mosquitto:
     image: eclipse-mosquitto:2
@@ -76,7 +100,14 @@ services:
       - 1883:1883
     volumes: 
       - ./configuration/mosquitto/config/:/mosquitto/config/
-
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.86
+    restart: unless-stopped
+networks:
+  Server-MacVLAN:
+    external: true
+    name: Server-MacVLAN
 volumes:
   postgresqldata:
   redisdata:
