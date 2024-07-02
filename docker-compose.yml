@@ -98,6 +98,7 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.86
+        
 networks:
   Server-MacVLAN:
     external: true
