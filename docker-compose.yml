@@ -8,6 +8,9 @@ services:
     volumes:
       - ./configuration/chirpstack:/etc/chirpstack
       - ./lorawan-devices:/opt/lorawan-devices
+    networks:
+      Server-MacVLAN:
+        ipv4_address: 10.10.69.80
     depends_on:
       - postgres
       - mosquitto
@@ -17,10 +20,8 @@ services:
       - REDIS_HOST=redis
       - POSTGRESQL_HOST=postgres
     ports:
-      - 8080:8080
-    networks:
-      Server-MacVLAN:
-        ipv4_address: 10.10.69.80
+      - 8080:8080/tcp
+  
 
   chirpstack-gateway-bridge:
     image: chirpstack/chirpstack-gateway-bridge:4
