@@ -21,7 +21,6 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.80
-    restart: unless-stopped
 
   chirpstack-gateway-bridge:
     image: chirpstack/chirpstack-gateway-bridge:4
@@ -31,7 +30,6 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.81
-    restart: unless-stopped
     volumes:
       - ./configuration/chirpstack-gateway-bridge:/etc/chirpstack-gateway-bridge
     environment:
@@ -54,7 +52,6 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.82
-    restart: unless-stopped
 
   chirpstack-rest-api:
     image: chirpstack/chirpstack-rest-api:4
@@ -67,7 +64,6 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.83
-    restart: unless-stopped
 
   postgres:
     image: postgres:14-alpine
@@ -80,7 +76,6 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.84
-    restart: unless-stopped
 
   redis:
     image: redis:7-alpine
@@ -91,7 +86,6 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.85
-    restart: unless-stopped
 
   mosquitto:
     image: eclipse-mosquitto:2
@@ -103,7 +97,6 @@ services:
     networks:
       Server-MacVLAN:
         ipv4_address: 10.10.69.86
-    restart: unless-stopped
 networks:
   Server-MacVLAN:
     external: true
